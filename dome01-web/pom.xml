@@ -10,26 +10,104 @@
     <packaging>war</packaging>
     <name>dome01-web</name>
     <url>http://maven.apache.org</url>
-    <build>
-        <finalName>dome-web</finalName>
-    </build>
 
     <dependencies>
         <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>3.8.1</version>
-            <scope>test</scope>
+           <groupId>com.jd.xiemingmin</groupId>
+            <artifactId>dome01-service</artifactId>
+            <version>1.0-SNAPSHOT</version>
         </dependency>
-        <!-- spring核心包 -->
         <dependency>
             <groupId>org.springframework</groupId>
-            <artifactId>spring-core</artifactId>
+            <artifactId>spring-web</artifactId>
         </dependency>
-        <!-- spring context包 -->
         <dependency>
             <groupId>org.springframework</groupId>
-            <artifactId>spring-context</artifactId>
+            <artifactId>spring-webmvc</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>javax.servlet-api</artifactId>
+            <version>3.1.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+            <version>1.2.44</version>
+        </dependency>
+
+        <!-- 使用thymeleaf试图 -->
+        <dependency>
+            <groupId>org.thymeleaf</groupId>
+            <artifactId>thymeleaf</artifactId>
+            <version>3.0.5.RELEASE</version>
+        </dependency>
+        <dependency>
+            <groupId>org.thymeleaf</groupId>
+            <artifactId>thymeleaf-spring4</artifactId>
+            <version>3.0.5.RELEASE</version>
+        </dependency>
+
+        <!-- 日志 -->
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.logback-extensions</groupId>
+            <artifactId>logback-ext-spring</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>jcl-over-slf4j</artifactId>
         </dependency>
     </dependencies>
+
+    <!-- 多环境配置 -->
+    <profiles>
+        <profile>
+            <id>development</id>
+            <properties>
+                <!-- 配置文件名称 -->
+                <env.file.name>development</env.file.name>
+                <!-- 日志配置 -->
+                <dome01.log.pattern>%d [%t] %-5p %C#%M:%L %m%n</dome01.log.pattern>
+                <dome01.log.dir>/Users/xiemingmin/Develop/log</dome01.log.dir>
+                <dome01.log.level>DEBUG</dome01.log.level>
+            </properties>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+        </profile>
+        <profile>
+            <id>production</id>
+            <properties>
+                <!-- 配置文件名称 -->
+                <env.file.name>production</env.file.name>
+                <!-- 日志配置 -->
+                <dome01.log.pattern>%d [%t] %-5p %C#%M:%L %m%n</dome01.log.pattern>
+                <dome01.log.dir>/Users/xiemingmin/Develop/log</dome01.log.dir>
+                <dome01.log.level>DEBUG</dome01.log.level>
+            </properties>
+        </profile>
+    </profiles>
+
+    <!--项目构建、profile值填入资源文件中-->
+    <build>
+        <finalName>dome01-web</finalName>
+        <!-- 资源文件位置src/main/resources/,这下面的资源文件的${}会全部被替换成profile中的标签内容。
+                directory指定的value会作为classes的资源跟目录，
+                比如指定:src/main/resources/，则classes下会出现jdbc等包，
+                若指定:src/main/resources/jdbc/，则classes下直接出现jdbc包下的文件，不会额外出现jdbc等其他包结构。因为他把jdbc作为了根目录
+        -->
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
+
+    </build>
+
 </project>

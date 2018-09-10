@@ -1,6 +1,41 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context.xsd
+       http://www.springframework.org/schema/aop
+       http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+
+    <!-- context:component-scan 中包含了 context:annotation-config -->
+    <context:component-scan base-package="com.xiemingmin">
+        <!-- 排除掉 Controller注解标记的bean Controller应有springmvc容器管理 -->
+        <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+        <context:exclude-filter type="annotation" expression="org.springframework.web.bind.annotation.RestController"/>
+    </context:component-scan>
+
+    <!--
+        <aop:config>标签的proxy-target-class属性值得问题，proxy-target-class属性有两个值：true或者false。
+        默认状态下，proxy-target-class属性的值为false，那么被代理类是基于javaSE（JDK）的动态代理（一般被代理类会实现接口）；
+        如果显式的设置了proxy-target-class属性的值为true，那么被代理类就将基于cglib动态代理（spring框架中的代理）。
+    -->
+    <aop:config proxy-target-class="true"/>
+    <!--&lt;!&ndash; Enables the use of the @AspectJ style of Spring AOP &ndash;&gt;-->
+    <!--<aop:aspectj-autoproxy/>-->
+
+    <!-- 加载配置文件 -->
+    <!-- 也可使用 <context:property-placeholder location="classpath:jdbc.properties"/> -->
+    <bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="location">
+            <value>classpath:profiles/${env.file.name}.properties</value>
+        </property>
+    </bean>
+
+    <!--引入其他配置文件-->
+    <import resource="spring-config-mybatis.xml"/>
 
 </beans>

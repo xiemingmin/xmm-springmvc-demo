@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 属性描述 scan：性设置为true时，配置文件如果发生改变，将会被重新加载，默认值为true
+    scanPeriod:设置监测配置文件是否有修改的时间间隔，如果没有给出时间单位，默认单位是毫秒。当scan为true时，此属性生效。默认的时间间隔为1分钟。
+    debug:当此属性设置为true时，将打印出logback内部日志信息，实时查看logback运行状态。默认值为false。 -->
+<configuration scan="true" scanPeriod="60 seconds" debug="false">
+    <!-- 定义日志文件 输入位置,注意此处的/ -->
+    <property name="log_dir" value="${dome01.log.dir}"/>
+    <!-- 日志最大的历史 7天 -->
+    <property name="maxHistory" value="7"/>
+
+    <!-- 控制台输出日志 -->
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>${dome01.log.pattern}</pattern>
+        </encoder>
+    </appender>
+
+    <!-- DEBUG 日志 appender -->
+    <appender name="DEBUG" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${log_dir}/dome01-debug.log</file>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>DEBUG</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${log_dir}/dome01-debug-%d{yyyy-MM-dd}.log
+            </fileNamePattern>
+            <maxHistory>${maxHistory}</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>${dome01.log.pattern}</pattern>
+        </encoder>
+    </appender>
+
+    <!-- INFO 日志 appender -->
+    <appender name="INFO" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${log_dir}/dome01-info.log</file>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>INFO</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${log_dir}/dome01-info-%d{yyyy-MM-dd}.log
+            </fileNamePattern>
+            <maxHistory>${maxHistory}</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>${dome01.log.pattern}</pattern>
+        </encoder>
+    </appender>
+
+
+    <!-- WARN appender -->
+    <appender name="WARN" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${log_dir}/dome01-warn.log</file>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>WARN</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${log_dir}/dome01-warn-%d{yyyy-MM-dd}.log
+            </fileNamePattern>
+            <maxHistory>${maxHistory}</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>${dome01.log.pattern}</pattern>
+        </encoder>
+    </appender>
+
+
+    <!-- ERROR appender -->
+    <appender name="ERROR" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${log_dir}/dome01-error.log</file>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>ERROR</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- 按天回滚 daily -->
+            <fileNamePattern>${log_dir}/dome01-error-%d{yyyy-MM-dd}.log
+            </fileNamePattern>
+            <!-- 日志最大的历史 60天 -->
+            <maxHistory>${maxHistory}</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>${dome01.log.pattern}</pattern>
+        </encoder>
+    </appender>
+
+    <!-- ############################################################################## -->
+    <appender name="BASE-FILE-LOG" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${log_dir}/dome-base.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${log_dir}/dome-base-%d{yyyy-MM-dd}.log
+            </fileNamePattern>
+            <maxHistory>${maxHistory}</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>${dome01.log.pattern}</pattern>
+        </encoder>
+    </appender>
+
+    <!-- 此处包含了mapper接口所在包所以可以将sql日志输出 -->
+    <logger name="com.xiemingmin" level="${dome01.log.level}">
+        <appender-ref ref="BASE-FILE-LOG"/>
+    </logger>
+
+    <!--myibatis log configure-->
+    <!--<logger name="com.apache.ibatis" level="${dome01.log.level}"/>-->
+    <!--<logger name="java.sql.Connection" level="${dome01.log.level}"/>-->
+    <!--<logger name="java.sql.Statement" level="${dome01.log.level}"/>-->
+    <!--<logger name="java.sql.PreparedStatement" level="${dome01.log.level}"/>-->
+    <!--<logger name="druid.sql" level="${dome01.log.level}"/>-->
+
+    <root level="INFO">
+        <appender-ref ref="STDOUT"/>
+        <appender-ref ref="DEBUG"/>
+        <appender-ref ref="INFO"/>
+        <appender-ref ref="WARN"/>
+        <appender-ref ref="ERROR"/>
+    </root>
+</configuration>
