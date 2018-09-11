@@ -51,7 +51,7 @@
         <!--<property name="configurationProperties" ref="configProperties"/>-->
         <!-- 注入数据库连接池 -->
         <property name="dataSource" ref="dataSource"/>
-        <!-- 扫描sql配置文件:mapper需要的xml文件 -->
+        <!-- 扫描sql配置文件:mapper需要的xml文件 多数据源或多个链接是可通过配置不通的mapper.xml路径来区分 -->
         <property name="mapperLocations" value="classpath*:mapper/*.xml"/>
         <!-- 配置MyBaties全局配置文件:mybatis-config.xml -->
         <property name="configLocation" value="classpath:mybatis-config.xml"/>
@@ -62,11 +62,15 @@
 
     <!-- 4.MapperScannerConfigurer：mapper的扫描器，将包下边的mapper接口自动创建代理对象，
 	      自动创建到spring容器中，bean的id是mapper的类名（首字母小写） -->
-    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+    <!-- Mybatis在与Spring集成的时候可以配置MapperFactoryBean来生成Mapper接口的代理 -->
+    <!-- 多数据源或者链接隔离是需配置用的MapperScannerConfigurer来扫描不通的包，以及配置不通的sqlSessionFactory -->
+    <bean id="mapperScannerConfigurer" class="org.mybatis.spring.mapper.MapperScannerConfigurer">
         <!-- 注入sqlSessionFactory -->
         <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
         <!-- 给出需要扫描Dao接口包 -->
         <property name="basePackage" value="com.xiemingmin.dao"/>
+        <!-- 通过注解来区分扫描哪些包 -->
+        <!--<property name="annotationClass" value="xxx"/>-->
     </bean>
 
     <!-- 事务配置 -->

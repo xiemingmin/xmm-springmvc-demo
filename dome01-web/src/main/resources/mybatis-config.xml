@@ -61,4 +61,9 @@
         <!--<package name="com.jd.videorank.domain.po"/>-->
     <!--</typeAliases>-->
 
+    <!-- 指定mapper文件 sqlSessionFactory中配置了mapperLocations所以可以不指定-->
+    <!--<mappers>-->
+        <!--<mapper resource="mapper/PersonMapper.xml"/>-->
+    <!--</mappers>-->
+
 </configuration>
