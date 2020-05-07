@@ -28,7 +28,7 @@
     -->
     <!--<aop:config proxy-target-class="true"/>-->
     <!--&lt;!&ndash; Enables the use of the @AspectJ style of Spring AOP &ndash;&gt;-->
-    <!--<aop:aspectj-autoproxy proxy-target-class="true"/>-->
+    <aop:aspectj-autoproxy proxy-target-class="true"/>
 
     <!-- 加载配置文件 -->
     <!-- 也可使用 <context:property-placeholder location="classpath:jdbc.properties"/> -->
