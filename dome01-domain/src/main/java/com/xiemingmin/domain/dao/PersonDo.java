@@ -1,5 +1,6 @@
 package com.xiemingmin.domain.dao;
 
+import lombok.Builder;
 import lombok.Data;
 
 /**
@@ -8,6 +9,7 @@ import lombok.Data;
  * @Description:
  */
 @Data
+@Builder
 public class PersonDo {
     /**
      * id主键

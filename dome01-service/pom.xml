@@ -37,7 +37,7 @@
             <artifactId>spring-aspects</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.mm</groupId>
+            <groupId>top.xiemingmin</groupId>
             <artifactId>call-limit</artifactId>
             <version>1.0.1-SNAPSHOT</version>
         </dependency>

@@ -1,7 +1,7 @@
 package com.xiemingmin.service;
 
-import com.mm.call.limit.intf.UserInfoSupport;
 import org.springframework.stereotype.Service;
+import top.xiemingmin.call.limit.intf.UserInfoSupport;
 
 /**
  * @Auther: xiemingmin
@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class UserInfoServiceImpl implements UserInfoSupport {
 
+    @Override
     public String currentUserKey() {
         return "xmm";
     }

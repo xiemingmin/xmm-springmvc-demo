@@ -116,7 +116,7 @@
     <!--<logger name="java.sql.PreparedStatement" level="${dome01.log.level}"/>-->
     <!--<logger name="druid.sql" level="${dome01.log.level}"/>-->
 
-    <root level="INFO">
+    <root level="DEBUG">
         <appender-ref ref="STDOUT"/>
         <appender-ref ref="DEBUG"/>
         <appender-ref ref="INFO"/>
